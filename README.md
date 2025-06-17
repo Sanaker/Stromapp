@@ -92,7 +92,7 @@ python app.py
 
 Hvis du kjører denne lokalt, husk å konfigurere BASE_URL i Android-appen din til å peke til denne serveren (se 2b. Konfigurer API-URLen ovenfor).
 🛠 Prosjektstruktur
-
+```bash
 Stromapp/
 ├── backend/                  # Valgfri Python Flask backend
 │   └── app.py                # Hoved-Flask-applikasjonen
@@ -114,7 +114,7 @@ Stromapp/
 │   ├── build.gradle
 ├── .gitignore                # Filer og mapper som ignoreres av Git
 └── README.md                 # Denne filen
-
+```
 ✨ Funksjoner
 
     Henter sanntids strømpriser fra en ekstern API (konfigurerbar).
