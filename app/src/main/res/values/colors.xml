@@ -13,4 +13,15 @@
     <color name="bad_price">#FF3B30</color>
     <color name="text_color_primary">#2C2C2E</color>
     <color name="text_color_secondary">#8E8E93</color>
+<!-- In res/values/colors.xml -->
+    <color name="text_color_secondary_transparent">#80FFFFFF</color>
+<!-- In res/values/colors.xml -->
+    <color name="high_price_red">#FF0000</color>   <!-- Example Red -->
+    <color name="low_price_green">#00FF00</color> <!-- Example Green -->
+    <color name="medium_price_black">#000000</color>
+
+    <!-- Example Black -->
+    <!-- <color name="text_color_primary">#YourPrimaryTextColor</color> -->
+
+    <!-- <color name="text_color_secondary">#YourSecondaryTextColor</color> -->
 </resources>

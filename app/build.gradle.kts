@@ -76,4 +76,6 @@ dependencies {
     // implementation(libs.logback.classic) // or another logging implementation
     implementation(libs.kotlin.reflect) // Bruk din Kotlin-versjon
     implementation (libs.androidx.swiperefreshlayout)// Or a newer stable version if available
+    implementation (libs.mpandroidchart)
+    implementation(libs.androidx.constraintlayout)
 }
