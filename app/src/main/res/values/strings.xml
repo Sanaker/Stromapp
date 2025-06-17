@@ -1,3 +1,14 @@
 <resources>
-    <string name="app_name">Stromapp</string>
+    <string name="app_name">Strømpris</string>
+    <string name="loading_price">Laster pris...</string>
+    <string name="loading_time">Laster tid...</string>
+    <string name="power_graph_content_description">Strømgraf</string>
+    <string name="no_price_data">Ingen prisdata tilgjengelig.</string>
+    <string name="network_error_title">Nettverksfeil eller databehandlingsfeil:</string>
+    <string name="network_error_message">Sjekk serverstatus og internettilkobling.</string>
+    <string name="current_time_prefix">Tid: </string>
+    <string name="price_prefix">Pris: </string>
+    <string name="current_hour_label">Nåværende time</string>
+    <string name="current_price_label">Nåværende pris</string>
+    <string name="graph_title">Strømpriser de neste 24 timene</string>
 </resources>
