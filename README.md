@@ -141,4 +141,4 @@ Hvis du bruker den valgfrie Python-backend, er den avhengig av nordpool-api-bibl
 Foreslår du forbedringer eller rapporterer feil? Bidrag er velkomne!
 📄 Lisens
 
-Dette prosjektet er lisensiert under MIT-lisensen. Se LICENSE-filen for detaljer.
+Dette prosjektet er lisensiert under GPL-3-0. Se LICENSE-filen for detaljer.
