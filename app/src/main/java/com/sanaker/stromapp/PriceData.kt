@@ -1,11 +1,18 @@
-// app/src/main/java/com/sanaker/stromapp/PriceData.kt
-package com.sanaker.stromapp // Pass på at dette er riktig pakkenavn for appen din
+package com.sanaker.stromapp // Or your correct package name
 
-import kotlinx.serialization.Serializable // Viktig import!
+import kotlinx.serialization.Serializable
 
-@Serializable
+@Serializable // Make sure this is present
 data class PriceData(
-    val time: String,
+    val time: String, // Expected format e.g., "yyyy-MM-dd HH:mm"
     val price: Double,
-    val image: String?
+    val image: String? = null // Optional Base64 image
+)
+
+// You could add another data class here if needed, for example,
+// if your API returns a list of these under a different structure:
+@Serializable
+data class ApiResponse(
+    val prices: List<PriceData>
+    // other fields if your API returns more than just a list of prices
 )

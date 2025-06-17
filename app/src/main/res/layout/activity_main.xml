@@ -6,73 +6,103 @@
     android:id="@+id/swipeRefreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_color" tools:context=".MainActivity">
+    android:background="@color/background_color"
+    tools:context=".MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp"> <TextView
-        android:id="@+id/priceLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Nåværende pris:"
-        android:textSize="18sp"
-        android:textColor="@color/text_color_secondary"
-        app:layout_constraintBottom_toTopOf="@+id/priceTextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed"
-        app:layout_constraintVertical_bias="0.3"
-        android:layout_marginBottom="4dp"/>
+        android:padding="16dp">
+
+        <!-- Price Information -->
+        <TextView
+            android:id="@+id/priceLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nåværende pris:"
+            android:textColor="@color/text_color_secondary"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/priceTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center_horizontal"
             android:text="Laster pris..."
-            android:textSize="48sp" android:textStyle="bold"
             android:textColor="@color/text_color_primary"
-            app:layout_constraintBottom_toTopOf="@+id/timeTextView"
+            android:textSize="48sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/priceLabel"
-            android:layout_marginTop="0dp"
-            android:layout_marginBottom="16dp"/> <TextView
+            app:layout_constraintTop_toBottomOf="@+id/priceLabel" />
+
+        <TextView
             android:id="@+id/timeTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center_horizontal"
             android:text="Laster tid..."
-            android:textSize="22sp" android:textColor="@color/text_color_secondary"
-            app:layout_constraintBottom_toTopOf="@+id/imageView"
+            android:textColor="@color/text_color_secondary"
+            android:textSize="22sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/priceTextView"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="24dp"/> <TextView
+            app:layout_constraintTop_toBottomOf="@+id/priceTextView" />
+
+        <!-- Status TextView (for loading/error messages related to the chart or general status) -->
+        <!-- Start as gone, made visible by code -->
+        <TextView
+            android:id="@+id/statusTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center_horizontal"
+            android:textColor="@color/text_color_secondary"
+            android:textSize="16sp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/timeTextView"
+            tools:text="Statusmelding her..."
+            tools:visibility="visible"/>
+
+        <!-- Graph Section -->
+        <TextView
             android:id="@+id/graphLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:text="Prisutvikling de neste 24 timer:"
-            android:textSize="18sp"
             android:textColor="@color/text_color_secondary"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/timeTextView"
-            android:layout_marginBottom="8dp"/>
+            app:layout_constraintTop_toBottomOf="@+id/statusTextView" />
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/lineChart"
+            android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="8dp" android:layout_marginEnd="0dp"
-            android:layout_marginBottom="0dp"
-            android:contentDescription="Strømgraf"
-            android:scaleType="fitCenter"
+            android:layout_marginTop="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/graphLabel"
-            app:layout_constraintVertical_bias="0.0"
-            app:layout_constraintHeight_default="wrap"
-            app:layout_constraintHeight_percent="0.6" /> </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintTop_toBottomOf="@+id/graphLabel" />
+
+        <!-- ProgressBar centered, shown during loading -->
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
