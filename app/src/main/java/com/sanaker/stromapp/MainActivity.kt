@@ -32,9 +32,9 @@ import kotlin.collections.ArrayList
 // import com.sanaker.stromapp.PriceData
 
 class MainActivity : AppCompatActivity() {
-
-    //private val BASE_URL = "http://10.0.2.2:5000" // For Android emulator to reach localhost:5000 on host machine
-    private val BASE_URL = "https://api.sanakerdagestad.no" // If your API is deployed
+    //Change here after what you want the app to connect to. 
+    private val BASE_URL = "http://10.0.2.2:5000" // For Android emulator to reach localhost:5000 on host machine
+    //private val BASE_URL = "https://YOUR.API.HERE" // If your API is deployed
     // private val BASE_URL = "http://YOUR_COMPUTER_IP:5000" // If testing on physical device on same WiFi
     companion object {
         private const val HIGH_PRICE_THRESHOLD = 0.60

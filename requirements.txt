@@ -1,0 +1,9 @@
+flask
+requests
+datetime
+io
+base64
+matplotlib
+numpy
+nordpool
+
