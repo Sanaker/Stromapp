@@ -133,6 +133,7 @@ Android-appen bruker XML-layout for brukergrensesnittet. Du kan tilpasse designe
     activity_main.xml: Juster layouten, plassering av elementer og bruk av stiler.
 
 Du kan også implementere logikk i MainActivity.kt for å dynamisk endre farger basert på prisnivåer (f.eks. grønn for lave priser, rød for høye priser) for å forbedre brukeropplevelsen.
+```
 📓 To-Do liste
     1. Legge til instillingsmeny
         1. Endre region
@@ -146,7 +147,8 @@ Du kan også implementere logikk i MainActivity.kt for å dynamisk endre farger 
         1. mulighet til å legge en auto-update så en kan slippe å dra ned hver gang for å oppdatere prisen
         2. Always On skjerm - legge til en instilling så skjermen aldri skrur seg av (funker bra hvis du har en skjerm bare stående med appen åpen)
     4. (kanskje) mulig med en side nr.2 hvor man får en liste over alle prisene for dagen
-
+    5. Få appen ut på Google-Play Store (Her driver jeg å jobber med saken, bare må få verifisert kontoen min for å laste opp appen)
+```
 ⚠️ Viktig Merknad om Strømprisdata
 
 Hvis du bruker den valgfrie Python-backend, er den avhengig av nordpool-api-biblioteket. Vær oppmerksom på Nord Pools bruksvilkår og eventuelle begrensninger for datatilgang. Dataene som presenteres er for informasjonsformål og bør ikke brukes som eneste grunnlag for økonomiske beslutninger.
