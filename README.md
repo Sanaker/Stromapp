@@ -63,14 +63,13 @@ cd stromapp/backend # Antar at app.py ligger i en 'backend'-mappe inne i 'stroma
 b. Opprett et virtuelt miljø (Anbefalt)
 
 Det er god praksis å bruke et virtuelt miljø for å isolere prosjektets avhengigheter:
-Bash
-
+```Bash
 python -m venv venv
 # På Windows:
 .\venv\Scripts\activate
 # På macOS/Linux:
 source venv/bin/activate
-
+```
 c. Installer avhengigheter
 
 Installer alle nødvendige Python-pakker:
@@ -86,10 +85,9 @@ Du kan tilpasse AREA, MVA_RATE, STROEMSTOTTE_DEKNING, STROEMSTOTTE_GRENSE, og TI
 e. Kjør Flask Backend
 
 Start Flask-serveren. Den vil kjøre på http://0.0.0.0:5000 som standard.
-Bash
-
+```Bash
 python app.py
-
+```
 Hvis du kjører denne lokalt, husk å konfigurere BASE_URL i Android-appen din til å peke til denne serveren (se 2b. Konfigurer API-URLen ovenfor).
 🛠 Prosjektstruktur
 ```bash
@@ -153,7 +151,7 @@ Du kan også implementere logikk i MainActivity.kt for å dynamisk endre farger 
 ⚠️ Viktig Merknad om Strømprisdata
 
 Hvis du bruker den valgfrie Python-backend, er den avhengig av nordpool-api-biblioteket. Vær oppmerksom på Nord Pools bruksvilkår og eventuelle begrensninger for datatilgang. Dataene som presenteres er for informasjonsformål og bør ikke brukes som eneste grunnlag for økonomiske beslutninger.
-🤝 Bidrag
+
 
 Foreslår du forbedringer eller rapporterer feil? Bidrag er velkomne!
 📄 Lisens
