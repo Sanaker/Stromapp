@@ -133,8 +133,9 @@ Android-appen bruker XML-layout for brukergrensesnittet. Du kan tilpasse designe
     activity_main.xml: Juster layouten, plassering av elementer og bruk av stiler.
 
 Du kan også implementere logikk i MainActivity.kt for å dynamisk endre farger basert på prisnivåer (f.eks. grønn for lave priser, rød for høye priser) for å forbedre brukeropplevelsen.
-```
+
 📓 To-Do liste
+```
     1. Legge til instillingsmeny
         1. Endre region
         2. Endre API
