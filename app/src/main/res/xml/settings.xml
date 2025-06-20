@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="Server">
+
+        <EditTextPreference
+            app:key="base_url"
+            app:title="Server API URL"
+            app:summary="Enter the base URL for the API (e.g., http://10.0.2.2:5000)"
+            app:defaultValue="http://10.0.2.2:5000"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="Display">
+
+        <SwitchPreferenceCompat
+            app:key="show_values_on_chart"
+            app:title="Show Values on Chart"
+            app:summary="Display price values directly on the chart points"
+            app:defaultValue="false" />
+
+    </PreferenceCategory>
+
+    <!-- Add more preferences here as needed -->
+
+</PreferenceScreen>

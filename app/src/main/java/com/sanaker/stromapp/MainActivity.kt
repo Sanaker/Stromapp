@@ -1,15 +1,26 @@
 package com.sanaker.stromapp
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+//import androidx.compose.ui.semantics.text
+//import androidx.compose.ui.tooling.data.position
 import androidx.core.content.ContextCompat
 import androidx.core.text.color
+//import androidx.glance.visibility
 import androidx.lifecycle.lifecycleScope
+import androidx.preference.PreferenceManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+// Important: Use MaterialToolbar if that's what you have in XML
+import com.google.android.material.appbar.MaterialToolbar // If using MaterialToolbar
+// import androidx.appcompat.widget.Toolbar // If using androidx.appcompat.widget.Toolbar
+
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
@@ -28,24 +39,27 @@ import kotlinx.serialization.json.Json
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
-// Make sure this import points to your PriceData class
+
+// Assuming PriceData class is defined in your project
 // import com.sanaker.stromapp.PriceData
 
 class MainActivity : AppCompatActivity() {
-    //Change here after what you want the app to connect to. 
-    private val BASE_URL = "http://10.0.2.2:5000" // For Android emulator to reach localhost:5000 on host machine
-    //private val BASE_URL = "https://YOUR.API.HERE" // If your API is deployed
-    // private val BASE_URL = "http://YOUR_COMPUTER_IP:5000" // If testing on physical device on same WiFi
+
     companion object {
         private const val HIGH_PRICE_THRESHOLD = 0.60
         private const val LOW_PRICE_THRESHOLD = 0.20
+        private const val DEFAULT_BASE_URL = "https://api.sanakerdagestad.no"
     }
+
     private lateinit var priceTextView: TextView
     private lateinit var timeTextView: TextView
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var lineChart: LineChart
     private lateinit var statusTextView: TextView
     private lateinit var progressBar: ProgressBar
+    private lateinit var toolbar: MaterialToolbar // Use MaterialToolbar
+
+    private var currentBaseUrl: String = DEFAULT_BASE_URL
 
     private val client = HttpClient(CIO) {
         install(ContentNegotiation) {
@@ -65,30 +79,89 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // Input format from API (e.g., "2025-06-18 00:00")
     private val apiTimeInputFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
-    // For formatting time displayed in timeTextView
     private val displayTimeFormat = SimpleDateFormat("dd. MMM HH:mm", Locale.getDefault())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // --- Setup Toolbar ---
+        toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        // You can customize the toolbar further here, e.g., toolbar.setTitle("My Title")
+        // The title from app:title in XML should already be applied.
+
+        currentBaseUrl = getBaseUrlFromPreferences()
+
         priceTextView = findViewById(R.id.priceTextView)
         timeTextView = findViewById(R.id.timeTextView)
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout)
         lineChart = findViewById(R.id.lineChart)
-        statusTextView = findViewById(R.id.statusTextView) // Ensure this ID exists in XML
-        progressBar = findViewById(R.id.progressBar)     // Ensure this ID exists in XML
+        statusTextView = findViewById(R.id.statusTextView)
+        progressBar = findViewById(R.id.progressBar)
 
         swipeRefreshLayout.setOnRefreshListener {
             fetchAndDisplayData()
         }
 
         setupLineChartAppearance()
-        fetchAndDisplayData() // Initial data fetch
+        fetchAndDisplayData()
     }
 
+    override fun onResume() {
+        super.onResume()
+        val newBaseUrl = getBaseUrlFromPreferences()
+        val newShowValuesSetting = shouldShowValuesOnChart()
+
+        var settingsChanged = false
+        if (currentBaseUrl != newBaseUrl) {
+            currentBaseUrl = newBaseUrl
+            settingsChanged = true
+        }
+
+        if (lineChart.data != null) {
+            val dataSet = lineChart.data.dataSets.firstOrNull() as? LineDataSet
+            if (dataSet != null && dataSet.isDrawValuesEnabled != newShowValuesSetting) {
+                dataSet.setDrawValues(newShowValuesSetting)
+                lineChart.invalidate()
+            }
+        }
+
+        if (settingsChanged) {
+            fetchAndDisplayData()
+        }
+    }
+
+    // --- Options Menu Callbacks ---
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_settings -> {
+                startActivity(Intent(this, SettingsActivity::class.java))
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    // --- Preference Helper Functions ---
+    private fun getBaseUrlFromPreferences(): String {
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        return sharedPreferences.getString("base_url", DEFAULT_BASE_URL) ?: DEFAULT_BASE_URL
+    }
+
+    private fun shouldShowValuesOnChart(): Boolean {
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        return sharedPreferences.getBoolean("show_values_on_chart", false)
+    }
+
+
+    // --- Chart and Data Functions ---
     private fun setupLineChartAppearance() {
         lineChart.description.isEnabled = true
         lineChart.description.text = "Prisutvikling (NOK/kWh)"
@@ -104,15 +177,15 @@ class MainActivity : AppCompatActivity() {
         val xAxis = lineChart.xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM
         xAxis.textColor = ContextCompat.getColor(this, R.color.text_color_secondary)
-        xAxis.granularity = 1f // Show every hour label
+        xAxis.granularity = 1f
         xAxis.setDrawGridLines(true)
         xAxis.gridColor = ContextCompat.getColor(this, R.color.text_color_secondary_transparent)
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
-                return String.format("%02d", value.toInt()) // Format as "00", "01", etc.
+                return String.format(Locale.getDefault(), "%02d", value.toInt())
             }
         }
-        xAxis.axisMinimum = 0f  // Assuming hours 0-23
+        xAxis.axisMinimum = 0f
         xAxis.axisMaximum = 23f
 
         val leftAxis = lineChart.axisLeft
@@ -121,11 +194,9 @@ class MainActivity : AppCompatActivity() {
         leftAxis.gridColor = ContextCompat.getColor(this, R.color.text_color_secondary_transparent)
         leftAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
-                return String.format("%.2f kr", value)
+                return String.format(Locale.getDefault(), "%.2f kr", value)
             }
         }
-        // Consider setting axisMinimum based on data or to 0f
-        // leftAxis.axisMinimum = 0f // Or adjust based on your price range
 
         lineChart.axisRight.isEnabled = false
         lineChart.legend.textColor = ContextCompat.getColor(this, R.color.text_color_secondary)
@@ -139,86 +210,73 @@ class MainActivity : AppCompatActivity() {
         swipeRefreshLayout.isRefreshing = true
         showLoading(true)
         statusTextView.text = "Laster prisdata..."
-        // lineChart.clear() // You might clear the chart data here or in populateLineChart
 
         lifecycleScope.launch {
             try {
-                Log.d("API_CALL", "Fetching from: $BASE_URL") // Assuming BASE_URL is defined
-                val responseData: List<PriceData> = client.get(BASE_URL).body()
+                Log.d("API_CALL", "Fetching from: $currentBaseUrl")
+                val responseData: List<PriceData> = client.get(currentBaseUrl).body()
                 Log.d("API_RESPONSE", "Received ${responseData.size} PriceData items")
 
                 if (responseData.isNotEmpty()) {
-                    // ****** START MODIFICATION FOR PRICE TEXT COLOR ******
+                    val calendar = Calendar.getInstance()
+                    val currentSystemHour = calendar.get(Calendar.HOUR_OF_DAY)
 
-                    // Logic to determine the current price data point
-                    // This could be responseData.firstOrNull() or more complex logic
-                    // to find the price for the actual current hour.
-                    // For this example, let's assume you have a way to get it:
-                    val calendar = Calendar.getInstance() // If needed for current hour logic
-                    val currentSystemHour = calendar.get(Calendar.HOUR_OF_DAY) // If needed
-
-                    // Example: Find price data for the current system hour
                     val currentPriceDataPoint = responseData.find { priceData ->
                         try {
                             apiTimeInputFormat.parse(priceData.time)?.let { date ->
-                                calendar.time = date // Reuse calendar instance
-                                calendar.get(Calendar.HOUR_OF_DAY) == currentSystemHour
+                                val tempCalendar = Calendar.getInstance()
+                                tempCalendar.time = date
+                                tempCalendar.get(Calendar.HOUR_OF_DAY) == currentSystemHour
                             } ?: false
                         } catch (e: Exception) {
-                            false // Handle parsing error for this item
+                            Log.e("TimeParseFind", "Error parsing time for find: ${priceData.time}", e)
+                            false
                         }
-                    } ?: responseData.firstOrNull() // Fallback to the first item if current hour's not found or error
+                    } ?: responseData.firstOrNull()
 
                     if (currentPriceDataPoint != null) {
                         val currentPriceValue = currentPriceDataPoint.price
                         priceTextView.text = "${String.format(Locale.US, "%.2f", currentPriceValue)} kr/kWh"
 
-                        // Determine and set the text color
                         val priceColor = when {
                             currentPriceValue > HIGH_PRICE_THRESHOLD ->
                                 ContextCompat.getColor(this@MainActivity, R.color.high_price_red)
                             currentPriceValue < LOW_PRICE_THRESHOLD ->
                                 ContextCompat.getColor(this@MainActivity, R.color.low_price_green)
                             else ->
-                                ContextCompat.getColor(this@MainActivity, R.color.medium_price_black) // Or your default text color like R.color.text_color_primary
+                                ContextCompat.getColor(this@MainActivity, R.color.medium_price_black)
                         }
                         priceTextView.setTextColor(priceColor)
 
-                        // Update timeTextView as you were doing
                         try {
                             apiTimeInputFormat.parse(currentPriceDataPoint.time)?.let { parsedDate ->
                                 timeTextView.text = displayTimeFormat.format(parsedDate)
                             } ?: run {
-                                timeTextView.text = currentPriceDataPoint.time // Fallback
+                                timeTextView.text = currentPriceDataPoint.time
                             }
                         } catch (e: Exception) {
-                            timeTextView.text = currentPriceDataPoint.time // Fallback
-                            Log.e("TimeParse", "Could not parse time for display: ${currentPriceDataPoint.time}", e)
+                            timeTextView.text = currentPriceDataPoint.time
+                            Log.e("TimeParseDisplay", "Could not parse time for display: ${currentPriceDataPoint.time}", e)
                         }
                     } else {
-                        // Handle case where no suitable price data point is found
                         priceTextView.text = "Data utilgjengelig"
                         priceTextView.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.text_color_primary))
                         timeTextView.text = "Ukjent tid"
                     }
-                    // ****** END MODIFICATION FOR PRICE TEXT COLOR ******
 
-                    // Call populateLineChart as before
-                    populateLineChart(responseData) // Ensure this function exists and works
+                    populateLineChart(responseData)
                     statusTextView.text = ""
                     statusTextView.visibility = View.GONE
 
                 } else {
                     Log.d("API_RESPONSE", "Response data is empty.")
                     handleApiError("Ingen prisdata mottatt.")
-                    // Reset price text color on error
                     priceTextView.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.text_color_primary))
                 }
 
             } catch (e: Exception) {
                 Log.e("API_ERROR", "Error fetching or processing data: ${e.message}", e)
                 handleApiError("Feil: ${e.localizedMessage ?: "Ukjent feil"}")
-                // Reset price text color on error
                 priceTextView.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.text_color_primary))
             } finally {
                 swipeRefreshLayout.isRefreshing = false
@@ -230,59 +288,54 @@ class MainActivity : AppCompatActivity() {
     private fun populateLineChart(priceHistory: List<PriceData>) {
         Log.d("ChartPopulate", "populateLineChart called. Price history size: ${priceHistory.size}")
         val entries = ArrayList<Entry>()
-        val calendar = Calendar.getInstance() // Reuse calendar instance
+        val calendar = Calendar.getInstance()
 
         for (dataPoint in priceHistory) {
             try {
                 apiTimeInputFormat.parse(dataPoint.time)?.let { date ->
                     calendar.time = date
-                    val hourOfDay = calendar.get(Calendar.HOUR_OF_DAY).toFloat() // X value: hour (0-23)
+                    val hourOfDay = calendar.get(Calendar.HOUR_OF_DAY).toFloat()
                     entries.add(Entry(hourOfDay, dataPoint.price.toFloat()))
-                    Log.d("ChartPopulate", "Added entry: X=${hourOfDay}, Y=${dataPoint.price.toFloat()}")
                 }
             } catch (e: Exception) {
                 Log.e("ChartData", "Error parsing date or creating entry for chart: ${dataPoint.time}", e)
             }
         }
-
-        Log.d("ChartPopulate", "Total entries created: ${entries.size}")
+        Log.d("ChartPopulate", "Total entries created for chart: ${entries.size}")
 
         if (entries.isEmpty()) {
-            Log.d("ChartPopulate", "Entries list is empty. Setting no data text.")
             lineChart.setNoDataText("Ingen gyldig data for graf.")
             lineChart.setNoDataTextColor(ContextCompat.getColor(this, R.color.text_color_secondary))
-            lineChart.data = null // Clear out old data
-            lineChart.invalidate() // Refresh chart to show "no data" text
+            lineChart.data = null
+            lineChart.invalidate()
             return
         }
 
-        // Sort entries by hour to ensure the line chart draws correctly
         entries.sortBy { it.x }
 
         val dataSet = LineDataSet(entries, "Pris (kr/kWh)")
-        dataSet.color = ContextCompat.getColor(this, R.color.good_price) // Example color
+        dataSet.color = ContextCompat.getColor(this, R.color.good_price)
         dataSet.valueTextColor = ContextCompat.getColor(this, R.color.text_color_primary)
         dataSet.lineWidth = 2.5f
-        dataSet.setCircleColor(ContextCompat.getColor(this, R.color.normal_price)) // Example color
+        dataSet.setCircleColor(ContextCompat.getColor(this, R.color.normal_price))
         dataSet.circleRadius = 4f
         dataSet.setDrawCircleHole(false)
         dataSet.valueTextSize = 10f
         dataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
-        dataSet.setDrawValues(false) // Hide values on points if too cluttered
+        dataSet.setDrawValues(shouldShowValuesOnChart())
 
         val lineData = LineData(dataSet)
         lineChart.data = lineData
-        lineChart.invalidate() // Refresh chart
-        lineChart.animateX(1000) // Optional animation
+        lineChart.invalidate()
+        lineChart.animateX(1000)
     }
 
     private fun showLoading(isLoading: Boolean) {
         progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
-        lineChart.setTouchEnabled(!isLoading) // Disable chart interaction during load
+        // lineChart.setTouchEnabled(!isLoading) // Consider if you want chart interaction disabled during load
         if (isLoading) {
             statusTextView.visibility = View.VISIBLE
         }
-        // statusTextView will be hidden or updated in fetchAndDisplayData or handleApiError
     }
 
     private fun handleApiError(message: String) {
@@ -290,10 +343,10 @@ class MainActivity : AppCompatActivity() {
         timeTextView.text = "Data utilgjengelig"
         statusTextView.text = message
         statusTextView.visibility = View.VISIBLE
-        lineChart.setNoDataText(message) // Show error message on chart
-        lineChart.setNoDataTextColor(ContextCompat.getColor(this, R.color.bad_price)) // Example color
-        lineChart.data = null // Clear out old data
-        lineChart.invalidate() // Refresh chart to show error message
+        lineChart.setNoDataText(message)
+        lineChart.setNoDataTextColor(ContextCompat.getColor(this, R.color.bad_price))
+        lineChart.data = null // Clear previous data
+        lineChart.invalidate()
     }
 
     override fun onDestroy() {

@@ -1,7 +1,58 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+    <!--
+        NOTE: You might not even need to redeclare Base.Theme.Stromapp here
+        if all the color changes are handled by values-night/colors.xml
+        and the parent Theme.Material3.DayNight.NoActionBar.
+        The system will automatically pick up the dark colors.
+
+        This file is mainly if you need to change non-color theme attributes specifically for dark mode,
+        OR if you want to be very explicit and ensure the theme points to the correct
+        (dark) versions of colors (though it should do so automatically if names match).
+    -->
     <style name="Base.Theme.Stromapp" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <!-- All items here will use colors from values-night/colors.xml automatically -->
+        <!-- Example: If you wanted a different elevation for Toolbars only in dark mode -->
+        <!-- <item name="android:elevation">8dp</item> -->
+
+        <!-- The following color references will automatically use values from values-night/colors.xml -->
+        <item name="colorPrimary">@color/my_primary_color</item>
+        <item name="colorPrimaryVariant">@color/my_primary_variant_color</item>
+        <item name="colorOnPrimary">@color/my_on_primary_color</item>
+        <item name="colorSecondary">@color/my_secondary_color</item>
+        <item name="colorSecondaryVariant">@color/my_secondary_variant_color</item>
+        <item name="colorOnSecondary">@color/my_on_secondary_color</item>
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:windowBackground">@color/my_background_color</item>
+        <item name="colorSurface">@color/my_surface_color</item>
+        <item name="colorError">@color/my_error_color</item>
+        <item name="colorOnBackground">@color/my_on_background_color</item>
+        <item name="colorOnSurface">@color/my_on_surface_color</item>
+        <item name="colorOnError">@color/my_on_error_color</item>
+        <item name="android:textColorPrimary">@color/text_color_primary</item>
+        <item name="android:textColorSecondary">@color/text_color_secondary</item>
+        <item name="android:textColorHint">@color/text_color_secondary</item>
     </style>
+
+    <!-- Theme.Stromapp will inherit the above dark mode changes -->
+    <style name="Theme.Stromapp" parent="Base.Theme.Stromapp" />
+
+    <!-- Settings Activity Theme (Dark) -->
+    <style name="Theme.Stromapp.Settings" parent="Theme.Material3.DayNight">
+        <item name="colorPrimary">@color/your_settings_primary_color_dark</item> <!-- Explicitly point to dark setting color -->
+        <item name="colorSecondary">@color/your_settings_secondary_color_dark</item>
+        <item name="android:windowBackground">@color/your_settings_background_color_dark</item>
+        <item name="android:textColorPrimary">@color/your_settings_text_color_primary_dark</item>
+        <item name="android:textColorSecondary">@color/your_settings_text_color_secondary_dark</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.Stromapp</item>
+    </style>
+
+    <!--
+        PreferenceThemeOverlay.Stromapp (Dark)
+        This will also use colors from values-night/colors.xml
+        if your_settings_switch_checked_color has a dark variant.
+    -->
+    <style name="PreferenceThemeOverlay.Stromapp" parent="PreferenceThemeOverlay.v14.Material">
+        <item name="colorAccent">@color/your_settings_switch_checked_color_dark</item> <!-- Point to dark version -->
+    </style>
+
 </resources>
