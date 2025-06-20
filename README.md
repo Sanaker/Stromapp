@@ -134,9 +134,9 @@ Du kan også implementere logikk i MainActivity.kt for å dynamisk endre farger 
 
 📓 To-Do liste
 ```
-    1. Legge til instillingsmeny
+    1. Legge til instillingsmeny (PÅBEGYNT)
         1. Endre region
-        2. Endre API
+        2. Endre API (FERDIG)
         3. Mørk Modus
     2. Mer funksjonalitet for grafen
         1. Ha pris og tidspunkt på punktene i grafen
