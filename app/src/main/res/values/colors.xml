@@ -14,14 +14,67 @@
     <color name="text_color_primary">#2C2C2E</color>
     <color name="text_color_secondary">#8E8E93</color>
 <!-- In res/values/colors.xml -->
-    <color name="text_color_secondary_transparent">#80FFFFFF</color>
+    <color name="text_color_secondary_transparent">#80000000</color>
 <!-- In res/values/colors.xml -->
     <color name="high_price_red">#FF0000</color>   <!-- Example Red -->
     <color name="low_price_green">#00FF00</color> <!-- Example Green -->
     <color name="medium_price_black">#000000</color>
+    <!-- Brand Colors (Dark Theme) -->
+    <color name="my_primary_color">#FF373737</color>      <!-- Darker grey for Toolbar in dark mode -->
+    <color name="my_primary_variant_color">#FF2A2A2A</color> <!-- Even darker for status bar, etc. -->
+    <color name="my_secondary_color">#FF03DAC5</color>    <!-- Teal can often work in dark too, or use a brighter variant -->
+    <color name="my_secondary_variant_color">#FF03DAC5</color> <!-- Teal -->
+
+    <!-- Text & Icon Colors on Brand Colors (Dark Theme) -->
+    <color name="my_on_primary_color">#FFFFFFFF</color>   <!-- White text/icons on dark grey -->
+    <color name="my_on_secondary_color">#FF000000</color> <!-- Black text/icons on Teal (check contrast) -->
+
+    <!-- Background & Surface Colors (Dark Theme) -->
+    <color name="my_background_color">#FF121212</color>  <!-- Standard Material dark background -->
+    <color name="my_surface_color">#FF1E1E1E</color>     <!-- Slightly lighter dark grey for cards, dialogs (or #FF121212 if you prefer less elevation illusion) -->
+    <color name="my_error_color">#CF6679</color>         <!-- Lighter Material error color for dark theme -->
+
+    <!-- Text & Icon Colors on Background/Surface (Dark Theme) -->
+    <color name="my_on_background_color">#FFFFFFFF</color> <!-- White text on dark background -->
+    <color name="my_on_surface_color">#FFFFFFFF</color>  <!-- White text on dark surfaces -->
+    <color name="my_on_error_color">#FF000000</color>
+    <!-- 54% Opacity White - for secondary text/hints -->
+    <color name="text_color_disabled">#61FFFFFF</color>
+    <!-- 38% Opacity White - for disabled text/icons -->
+
+    <!-- Settings Screen Specific Colors (Dark Theme) - adjust as needed -->
+    <color name="your_settings_primary_color_dark">#FFBB86FC</color> <!-- Lighter Purple for dark theme -->
+    <color name="your_settings_secondary_color_dark">#FF03DAC5</color> <!-- Teal -->
+    <color name="your_settings_switch_checked_color_dark">#FF03DAC5</color> <!-- Teal or a brighter variant -->
+    <color name="your_settings_background_color_dark">#FF121212</color> <!-- Dark background -->
+    <color name="your_settings_text_color_primary_dark">#DEFFFFFF</color> <!-- White text -->
+    <color name="your_settings_text_color_secondary_dark">#8AFFFFFF</color> <!-- Light Grey text -->
+
+    <!-- Other specific colors for your app (Dark Theme) -->
+    <color name="good_price_color">#4CAF50</color> <!-- Ensure good contrast on dark bg -->
+    <color name="normal_price_color">#FFC107</color>
+    <!-- Ensure good contrast on dark bg -->
+    <color name="bad_price_color">#F44336</color>
+
+    <!-- Your existing colors... -->
+
+
+    <!-- Add definitions for the missing settings colors -->
+    <color name="your_settings_switch_checked_color">#FF00FF00</color> <!-- Example: Green -->
+    <color name="your_settings_primary_color">#FF6200EE</color> <!-- Example: Purple -->
+    <color name="your_settings_secondary_color">#FF03DAC5</color> <!-- Example: Teal -->
+    <color name="your_settings_background_color">#FFFFFFFF</color> <!-- Example: White -->
+    <color name="your_settings_text_color_primary">#FF000000</color> <!-- Example: Black -->
+    <color name="your_settings_text_color_secondary">#757575</color>
 
     <!-- Example Black -->
     <!-- <color name="text_color_primary">#YourPrimaryTextColor</color> -->
 
     <!-- <color name="text_color_secondary">#YourSecondaryTextColor</color> -->
+     <!-- Black text on dark theme error color -->
+
+    <!-- General Text Colors (Dark Theme) -->
+    <!-- <color name="text_color_primary">#DEFFFFFF</color> -->
+ <!-- 87% Opacity White - for important text -->
+    <!-- <color name="text_color_secondary">#8AFFFFFF</color> -->
 </resources>

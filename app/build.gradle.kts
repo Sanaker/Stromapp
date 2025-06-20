@@ -78,4 +78,5 @@ dependencies {
     implementation (libs.androidx.swiperefreshlayout)// Or a newer stable version if available
     implementation (libs.mpandroidchart)
     implementation(libs.androidx.constraintlayout)
+    implementation ("androidx.preference:preference-ktx:1.2.1")
 }
