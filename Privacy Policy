@@ -1,0 +1,63 @@
+Personvernregler for StrømApp
+
+Sist oppdatert: 1. juli 2025
+
+Disse personvernreglene beskriver hvordan StrømApp ("appen", "vi", "oss", "vår") samler inn, bruker og beskytter informasjon når du bruker vår mobilapplikasjon. Vi er opptatt av å beskytte ditt personvern og behandle dine data på en sikker og ansvarlig måte i samsvar med gjeldende personvernlovgivning, inkludert General Data Protection Regulation (GDPR).
+
+1. Hvilken informasjon samler vi inn?
+
+StrømApp er designet for å gi deg informasjon om strømpriser og annen relevant data. Appen samler i hovedsak inn følgende typer informasjon:
+
+    Tekniske data og bruksdata: For å sikre appens funksjonalitet, ytelse og for å identifisere og løse tekniske problemer, kan vi samle inn anonymisert teknisk informasjon som:
+
+        IP-adresse: Brukes for å kommunisere med API-er for å hente strømpriser og for å sikre appens sikkerhet. IP-adresser betraktes som personopplysninger under GDPR.
+
+        Enhetsinformasjon: Type enhet, operativsystemversjon og unike enhetsidentifikatorer (ikke direkte knyttet til din identitet som person).
+
+        Bruksdata: Informasjon om hvordan du interagerer med appen, for eksempel hvilke skjermer du besøker, hvor lenge du bruker appen, og hvilke funksjoner du bruker. Dette brukes til å forbedre brukeropplevelsen og appens funksjonalitet.
+
+Vi samler ikke inn personlig identifiserbar informasjon som navn, e-postadresse, telefonnummer, nøyaktig geografisk lokasjon eller lignende. Vi samler heller ikke inn annen informasjon som direkte kan identifisere deg som person, med mindre du eksplisitt og frivillig oppgir dette i fremtidige funksjoner (som i så fall vil oppdateres i disse retningslinjene).
+
+2. Hvordan bruker vi informasjonen?
+
+Informasjonen vi samler inn brukes til følgende formål:
+
+    Levere og forbedre tjenesten: For å gi deg strømprisinformasjon og annen relatert data, samt for å forbedre appens funksjonalitet, stabilitet og brukervennlighet.
+
+    Analyse og feilretting: For å forstå hvordan appen brukes, identifisere trender og forbedre appen basert på bruksmønstre. Dette hjelper oss også med å feilsøke og rette opp eventuelle tekniske problemer.
+
+3. Deling av informasjon med tredjeparter
+
+Vi deler ikke personopplysninger med tredjeparter med mindre det er nødvendig for å levere tjenesten, overholde lovkrav, eller med ditt uttrykkelige samtykke.
+
+Det er sannsynlig at appen bruker tredjepartsbiblioteker for funksjonalitet eller analyse. Disse tjenestene kan samle inn og behandle data i henhold til sine egne personvernregler. Vi oppfordrer deg til å sette deg inn i personvernreglene til eventuelle tredjeparter som brukes av appen. For eksempel kan et API for strømpriser ha sine egne retningslinjer for databehandling.
+
+4. Dine rettigheter
+
+I henhold til GDPR har du som bruker visse rettigheter knyttet til dine personopplysninger:
+
+    Rett til innsyn: Du har rett til å be om innsyn i de personopplysningene vi har om deg.
+
+    Rett til retting: Du har rett til å be om at uriktige eller ufullstendige personopplysninger om deg blir rettet.
+
+    Rett til sletting ("retten til å bli glemt"): Du har rett til å be om at dine personopplysninger blir slettet under visse omstendigheter. Siden StrømApp ikke samler inn direkte identifiserbar personlig informasjon, vil sletting av appen fra din enhet i praksis slette all lokal data relatert til appen.
+
+    Rett til begrensning av behandling: Du har rett til å be om begrensning av behandlingen av dine personopplysninger under visse omstendigheter.
+
+    Rett til dataportabilitet: Du har rett til å motta personopplysninger du har gitt oss i et strukturert, vanlig brukt og maskinlesbart format, og til å overføre disse til en annen behandlingsansvarlig.
+
+    Rett til å protestere: Du har rett til å protestere mot behandlingen av dine personopplysninger under visse omstendigheter.
+
+For å utøve dine rettigheter, kan du kontakte oss via kontaktinformasjonen nedenfor.
+
+5. Datasikkerhet
+
+Vi tar sikkerheten til dine data på alvor og har implementert tekniske og organisatoriske tiltak for å beskytte informasjonen vi samler inn mot uautorisert tilgang, endring, avsløring eller ødeleggelse.
+
+6. Endringer i personvernreglene
+
+Vi kan oppdatere disse personvernreglene fra tid til annen. Eventuelle endringer vil bli publisert i appen og/eller på vår nettside. Vi anbefaler deg å gjennomgå disse reglene jevnlig for å holde deg informert om hvordan vi beskytter din informasjon.
+
+7. Kontakt oss
+
+Hvis du har spørsmål om disse personvernreglene eller vår behandling av personopplysninger, kan du kontakte utvikleren (Sanaker) via GitHub-profilen, eller på epost: contact@sanakerdagestad.no
